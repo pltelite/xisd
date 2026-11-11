@@ -90,7 +90,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-6 rounded-2xl border border-gray-200 shadow-sm gap-4">
                 <div>
                     <p class="text-base font-bold text-black">Gold Driving School</p>
-                    <h2 class="text-2xl font-extrabold text-black mt-0.5">Welcome, Gofaone!</h2>
+                    <h2 id="dashboard-welcome" class="text-2xl font-extrabold text-black mt-0.5">Welcome, Gofaone!</h2>
                     <p class="text-xs text-gray-600 mt-1">Ready for you next driving lesson?</p>
                 </div>
 
@@ -132,7 +132,7 @@
                 <p class="text-xs font-semibold text-black mt-2">40% completed</p>
             </div>
 
-          
+
             <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4">
                 <div class="flex justify-between items-center">
                     <div>
@@ -142,9 +142,9 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    
+
                     <div class="group overflow-hidden rounded-xl border border-gray-100 bg-gray-50 hover:shadow-md transition duration-200">
-                     <div class="h-40 overflow-hidden relative">
+                        <div class="h-40 overflow-hidden relative">
                             <img src="Cars\Polo.webp" alt="Volkswagen Polo" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                             <span class="absolute top-2 right-2 text-[10px] font-bold bg-black/70 text-white px-2 py-1 rounded-md backdrop-blur-sm">Manual</span>
                         </div>
@@ -154,7 +154,7 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="group overflow-hidden rounded-xl border border-gray-100 bg-gray-50 hover:shadow-md transition duration-200">
                         <div class="h-40 overflow-hidden relative">
                             <img src="Cars\Yaris.jpg" alt="Toyota Yaris" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
@@ -166,7 +166,7 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="group overflow-hidden rounded-xl border border-gray-100 bg-gray-50 hover:shadow-md transition duration-200">
                         <div class="h-40 overflow-hidden relative">
                             <img src="Cars\hyundai_i10.jpg" alt="Hundai i10" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
@@ -193,7 +193,7 @@
             <h2 class="text-2xl font-bold text-black">My Bookings</h2>
 
             <!-- Confirmed Card -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div id="bookings-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-3">
                     <div class="flex justify-between items-center text-xs font-bold">
                         <span class="text-black text-sm">15 June 2026</span>
@@ -272,7 +272,7 @@
         <section id="screen-profile" class="screen hidden p-6 space-y-6">
             <h2 class="text-2xl font-bold text-black">My Profile</h2>
             <div>
-                <h3 class="text-lg font-bold text-black">Gofaone</h3>
+                <h3 id="profile-name" class="text-lg font-bold text-black">Gofaone</h3>
                 <p class="text-xs text-gray-500">Student ID: #GDS-8802</p>
             </div>
 
@@ -280,7 +280,7 @@
                 <button class="w-full p-3.5 bg-softCard rounded-2xl flex items-center space-x-3 text-xs font-semibold text-black">
                     <span>👤</span><span>Personal Information</span>
                 </button>
-                <button class="w-full p-3.5 bg-softCard rounded-2xl flex items-center space-x-3 text-xs font-semibold text-black">
+                <button onClick="navigateTo('screen-settings')" class="w-full p-3.5 bg-softCard rounded-2xl flex items-center space-x-3 text-xs font-semibold text-black">
                     <span>⚙️</span><span>Settings</span>
                 </button>
                 <button class="w-full p-3.5 bg-softCard rounded-2xl flex items-center space-x-3 text-xs font-semibold text-black">
@@ -307,16 +307,58 @@
                 <button onclick="navigateTo('screen-dashboard')" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold hover:bg-gray-200">←</button>
                 <h2 class="text-xl font-bold text-black">Book a Lesson</h2>
             </div>
-            <form onsubmit="navigateTo('screen-bookings'); return false;" class="space-y-4">
-                <input type="text" placeholder="Instructor" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-                <input type="text" placeholder="Lesson Type" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-                <input type="text" placeholder="Date" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-                <input type="text" placeholder="Time" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
+
+            <form onsubmit="handleNewBooking(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Select Instructor</label>
+                    <select id="book-instructor" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none focus:border-brandGold">
+                        <option value="" disabled selected>Choose an instructor</option>
+                        <option value="Leon Schuster">Leon Schuster</option>
+                        <option value="John Doe">John Doe</option>
+                        <option value="Peter">Peter</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Lesson Type</label>
+                    <select id="book-type" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none focus:border-brandGold">
+                        <option value="" disabled selected>Select lesson type</option>
+                        <option value="Driving Lesson">Standard Code 8 Lesson</option>
+                        <option value="Test Preparation">Test Preparation & Parking</option>
+                        <option value="Mock Test">K53 Mock Test Evaluation</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Date</label>
+                    <input type="date" id="book-date" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none focus:border-brandGold">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Time Slot</label>
+                    <input type="time" id="book-time" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none focus:border-brandGold">
+                </div>
                 <button type="submit" class="w-full py-3.5 bg-brandGold text-black font-semibold rounded-lg mt-4 hover:opacity-95">Confirm Booking</button>
             </form>
         </section>
 
-        
+        <!-- SCREEN 8: SETTINGS Change Display Name -->
+        <section id="screen-settings" class="screen hidden max-w-lg mx-auto bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
+            <div class="flex items-center space-x-3 mb-6">
+                <button onclick="navigateTo('screen-profile')" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold hover:bg-gray-200">←</button>
+                <h2 class="text-xl font-bold text-black">Account Settings</h2>
+            </div>
+
+            <form onsubmit="handleUpdateProfile(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Update Display Name</label>
+                    <input type="text" id="settings-name-input" placeholder="Enter new name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none focus:border-brandGold">
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-brandGold text-black font-semibold rounded-lg mt-4 hover:opacity-95 transition">Save Changes</button>
+            </form>
+        </section>
+
+
 
     </main>
 
