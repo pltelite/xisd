@@ -16,6 +16,9 @@ Cancelling booking
 View their progress
 view their profile
 
+**Purpose of the App**
+The Gold Driving School System allows for learner driver management to be easier, allowing students to smoothly trgister, login and book driving lessons with instructors which are qualified. They can also track their progress and manage their profile settings
+
 The site navigation is very useer friendly
 
 The project is using
