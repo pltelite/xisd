@@ -1,13 +1,3 @@
-/* Styling Enhancements */
 body {
   min-height: 100vh;
-}
-
-.slot-card {
-  transition: all 0.2s ease-in-out;
-}
-
-.slot-card:hover {
-  transform: translateY(-2px);
-  border-color: #6366f1;
 }
