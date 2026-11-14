@@ -40,12 +40,15 @@
           <p class="text-[10px] text-slate-400 font-mono">Reg: 2024/892011/07 • VAT: 4900293811</p>
         </div>
         <nav class="space-y-2 text-sm font-medium">
-          <button onclick="navigateTo('screen-dashboard')" class="w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3"><span>🏠</span><span>Dashboard</span></button>
-          <button onclick="navigateTo('screen-book-lesson')" class="w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3"><span>📅</span><span>Book a Lesson</span></button>
-          <button onclick="navigateTo('screen-bookings')" class="w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3"><span>📋</span><span>My Bookings</span></button>
-          <button onclick="navigateTo('screen-progress')" class="w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3"><span>📊</span><span>K53 Progress & Quiz</span></button>
-          <button onclick="navigateTo('screen-admin')" class="w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3 text-amber-400 font-bold"><span>🛡️</span><span>Instructor Portal</span></button>
-          <button onclick="navigateTo('screen-profile')" class="w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3"><span>💳</span><span>Payments & Profile</span></button>
+            <button onclick="navigateTo('screen-dashboard')" class="student-only w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3"><span>🏠</span><span>Dashboard</span></button>
+            <button onclick="navigateTo('screen-book-lesson')" class="student-only w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3"><span>📅</span><span>Book a Lesson</span></button>
+            <button onclick="navigateTo('screen-bookings')" class="student-only w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3"><span>📋</span><span>My Bookings</span></button>
+            <button onclick="navigateTo('screen-progress')" class="student-only w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3"><span>📊</span><span>K53 Progress & Quiz</span></button>
+            <button onclick="navigateTo('screen-profile')" class="student-only w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3"><span>💳</span><span>Payments & Profile</span></button>
+           
+            <button onclick="navigateTo('screen-admin')" class="instructor-only hidden w-full text-left px-4 py-2.5 rounded-xl hover:bg-slate-800 transition flex items-center space-x-3 text-amber-400 font-bold"><span>🛡️</span><span>Instructor Portal</span></button>
+
+
         </nav>
       </div>
       <div class="text-[11px] text-slate-400 border-t border-slate-800 pt-4 space-y-1">
@@ -58,288 +61,320 @@
     <!-- MAIN CONTENT VIEWPORT -->
     <div class="flex-1 overflow-y-auto max-h-screen sm:max-h-[880px] p-6 sm:p-8 relative">
 
-      <!-- SCREEN 1: LOGIN -->
-      <section id="screen-login" class="screen flex flex-col justify-center min-h-[750px] max-w-sm mx-auto">
-        <h1 class="text-3xl font-extrabold text-black tracking-tight leading-tight">GOLD<br><span class="text-2xl font-bold">Driving School</span></h1>
-        <p class="text-[10px] text-gray-500 font-mono mt-1">Reg No: 2024/892011/07 • K53 Certified</p>
+        <!-- SCREEN 1: LOGIN -->
+        <section id="screen-login" class="screen flex flex-col justify-center min-h-[750px] max-w-sm mx-auto">
+            <h1 class="text-3xl font-extrabold text-black tracking-tight leading-tight">GOLD<br><span class="text-2xl font-bold">Driving School</span></h1>
+            <p class="text-[10px] text-gray-500 font-mono mt-1">Reg No: 2024/892011/07 • K53 Certified</p>
 
-        <div class="mt-8 mb-6">
-          <h2 class="text-2xl font-bold text-black">Welcome Back</h2>
-          <p class="text-sm text-gray-600 mt-1">Log in to your professional portal.</p>
-        </div>
-
-        <form onsubmit="handleLogin(event)" class="space-y-4">
-          <input type="email" id="login-email" placeholder="Email Address (e.g. phomolo@gmail.com)" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none focus:border-brandGold">
-          <input type="password" id="login-password" placeholder="Password" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none focus:border-brandGold">
-          <button type="submit" class="w-full py-3.5 bg-brandGold text-black font-semibold rounded-full shadow-sm hover:opacity-95 transition">Login</button>
-        </form>
-
-        <div class="mt-6 text-center">
-          <button onclick="navigateTo('screen-register')" class="text-xs font-semibold text-brandGold hover:underline">Don't have an account? Register</button>
-        </div>
-
-        <div class="mt-12 text-center border-t border-gray-100 pt-4 space-y-1">
-          <p class="text-[11px] font-semibold text-gray-700">Gold Driving School (Pty) Ltd</p>
-          <p class="text-[10px] text-gray-500">📞 +27 (0)11 555 0192 • ✉️ info@golddrivingschool.co.za</p>
-        </div>
-      </section>
-
-      <!-- SCREEN 2: REGISTER -->
-      <section id="screen-register" class="screen hidden max-w-sm mx-auto space-y-4">
-        <div class="flex items-center space-x-3 mb-6">
-          <button onclick="navigateTo('screen-login')" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold">←</button>
-          <h2 class="text-xl font-bold text-black">Create a New Account</h2>
-        </div>
-        <form onsubmit="handleRegister(event)" class="space-y-4">
-          <input type="text" id="reg-firstname" placeholder="First Name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-          <input type="text" id="reg-lastname" placeholder="Last Name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-          <input type="email" id="reg-email" placeholder="Email Address" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-          <input type="tel" id="reg-phone" placeholder="Phone Number" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-          <input type="password" id="reg-password" placeholder="Password" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-          <button type="submit" class="w-full py-3.5 bg-brandGold text-black font-semibold rounded-full mt-4">Create Account</button>
-        </form>
-      </section>
-
-      <!-- SCREEN 3: HOME DASHBOARD -->
-      <section id="screen-dashboard" class="screen hidden space-y-6">
-        <div class="flex justify-between items-start">
-          <div>
-            <p class="text-xs font-bold uppercase tracking-wider text-brandPurple">Gold Driving School Portal</p>
-            <h2 id="dashboard-welcome" class="text-2xl font-extrabold text-black mt-0.5">Welcome, Student!</h2>
-            <p class="text-xs text-gray-600">Ready to ace your K53 driving test?</p>
-          </div>
-          <span class="text-[9px] bg-amber-100 text-amber-800 font-mono px-2 py-1 rounded font-semibold border border-amber-200">REG: 2024/892011/07</span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <button onclick="navigateTo('screen-book-lesson')" class="p-4 bg-brandPurple text-white font-medium rounded-2xl flex items-center justify-center space-x-3 shadow-md hover:opacity-95 transition">
-            <span class="text-xl">📅</span>
-            <div class="text-left">
-              <p class="text-sm font-bold">Book a Lesson</p>
-              <p class="text-[10px] text-purple-200">Choose your instructor & time slot</p>
+            <div class="mt-8 mb-6">
+                <h2 class="text-2xl font-bold text-black">Welcome Back</h2>
+                <p class="text-sm text-gray-600 mt-1">Log in to your professional portal.</p>
             </div>
-          </button>
-          <button onclick="navigateTo('screen-progress')" class="p-4 bg-amber-500 text-black font-medium rounded-2xl flex items-center justify-center space-x-3 shadow-md hover:opacity-95 transition">
-            <span class="text-xl">✍️</span>
-            <div class="text-left">
-              <p class="text-sm font-bold">K53 Practice Quiz</p>
-              <p class="text-[10px] text-gray-900">Test your road rules knowledge</p>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <input type="email" id="login-email" placeholder="Email Address (e.g. phomolo@gmail.com)" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none focus:border-brandGold">
+                <input type="password" id="login-password" placeholder="Password" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none focus:border-brandGold">
+                <button type="submit" class="w-full py-3.5 bg-brandGold text-black font-semibold rounded-full shadow-sm hover:opacity-95 transition">Login</button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <button onclick="navigateTo('screen-register')" class="text-xs font-semibold text-brandGold hover:underline">Don't have an account? Register</button>
             </div>
-          </button>
-        </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div class="bg-lightPurpleBg p-4 rounded-2xl border border-purple-50">
-            <p class="text-xs text-gray-500">Next Lesson</p>
-            <p id="dash-next-lesson" class="text-base font-extrabold text-black mt-0.5">15 June • 14:00</p>
-            <p id="dash-next-instructor" class="text-xs text-gray-500 mt-0.5">Instructor: Leon Schuster</p>
-          </div>
+            <div class="mt-4 text-center">
+                <button onclick="navigateTo('screen-admin-login')" class="text-xs font-medium text-slate-500 hover:text-black underline">Staff / Instructor Login →</button>
+            </div>
 
-          <div class="bg-lightPurpleBg p-4 rounded-2xl border border-purple-50">
-            <p class="text-xs text-gray-500">Lessons Completed</p>
-            <p class="text-xl font-extrabold text-black mt-0.5">8 / 20</p>
-            <p class="text-xs text-gray-500 mt-0.5">K53 Compliant</p>
-          </div>
+            <div class="mt-12 text-center border-t border-gray-100 pt-4 space-y-1">
+                <p class="text-[11px] font-semibold text-gray-700">Gold Driving School (Pty) Ltd</p>
+                <p class="text-[10px] text-gray-500">📞 +27 (0)11 555 0192 • ✉️ info@golddrivingschool.co.za</p>
+            </div>
+        </section>
 
-          <div class="bg-lightPurpleBg p-4 rounded-2xl border border-purple-50 flex flex-col justify-between">
+        <!-- SCREEN 2: REGISTER -->
+        <section id="screen-register" class="screen hidden max-w-sm mx-auto space-y-4">
+            <div class="flex items-center space-x-3 mb-6">
+                <button onclick="navigateTo('screen-login')" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold">←</button>
+                <h2 class="text-xl font-bold text-black">Create a New Account</h2>
+            </div>
+            <form onsubmit="handleRegister(event)" class="space-y-4">
+                <input type="text" id="reg-firstname" placeholder="First Name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
+                <input type="text" id="reg-lastname" placeholder="Last Name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
+                <input type="email" id="reg-email" placeholder="Email Address" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
+                <input type="tel" id="reg-phone" placeholder="Phone Number" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
+                <input type="password" id="reg-password" placeholder="Password" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
+                <button type="submit" class="w-full py-3.5 bg-brandGold text-black font-semibold rounded-full mt-4">Create Account</button>
+            </form>
+        </section>
+
+        <!-- SCREEN 3: HOME DASHBOARD -->
+        <section id="screen-dashboard" class="screen hidden space-y-6">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-brandPurple">Gold Driving School Portal</p>
+                    <h2 id="dashboard-welcome" class="text-2xl font-extrabold text-black mt-0.5">Welcome, Student!</h2>
+                    <p class="text-xs text-gray-600">Ready to ace your K53 driving test?</p>
+                </div>
+                <span class="text-[9px] bg-amber-100 text-amber-800 font-mono px-2 py-1 rounded font-semibold border border-amber-200">REG: 2024/892011/07</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <button onclick="navigateTo('screen-book-lesson')" class="p-4 bg-brandPurple text-white font-medium rounded-2xl flex items-center justify-center space-x-3 shadow-md hover:opacity-95 transition">
+                    <span class="text-xl">📅</span>
+                    <div class="text-left">
+                        <p class="text-sm font-bold">Book a Lesson</p>
+                        <p class="text-[10px] text-purple-200">Choose your instructor & time slot</p>
+                    </div>
+                </button>
+                <button onclick="navigateTo('screen-progress')" class="p-4 bg-amber-500 text-black font-medium rounded-2xl flex items-center justify-center space-x-3 shadow-md hover:opacity-95 transition">
+                    <span class="text-xl">✍️</span>
+                    <div class="text-left">
+                        <p class="text-sm font-bold">K53 Practice Quiz</p>
+                        <p class="text-[10px] text-gray-900">Test your road rules knowledge</p>
+                    </div>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-lightPurpleBg p-4 rounded-2xl border border-purple-50">
+                    <p class="text-xs text-gray-500">Next Lesson</p>
+                    <p id="dash-next-lesson" class="text-base font-extrabold text-black mt-0.5">15 June • 14:00</p>
+                    <p id="dash-next-instructor" class="text-xs text-gray-500 mt-0.5">Instructor: Leon Schuster</p>
+                </div>
+
+                <div class="bg-lightPurpleBg p-4 rounded-2xl border border-purple-50">
+                    <p class="text-xs text-gray-500">Lessons Completed</p>
+                    <p class="text-xl font-extrabold text-black mt-0.5">8 / 20</p>
+                    <p class="text-xs text-gray-500 mt-0.5">K53 Compliant</p>
+                </div>
+
+                <div class="bg-lightPurpleBg p-4 rounded-2xl border border-purple-50 flex flex-col justify-between">
+                    <div>
+                        <p class="text-xs text-gray-500">Outstanding Balance</p>
+                        <p id="dash-balance-display" class="text-xl font-extrabold text-black mt-0.5">R850</p>
+                    </div>
+                    <button onclick="navigateTo('screen-profile')" class="text-[11px] font-bold text-brandPurple hover:underline mt-2 text-left">View Invoice & Pay →</button>
+                </div>
+            </div>
+
+            <!-- Instructor Fleet Highlights -->
+            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
+                <h3 class="text-sm font-bold text-black">Featured Instructors & Vehicles</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs">
+                        <p class="font-bold text-black">Leon Schuster</p>
+                        <p class="text-gray-500 text-[11px]">Code 8 Manual (Toyota Yaris)</p>
+                        <p class="text-green-600 font-semibold mt-1">98% Pass Rate</p>
+                    </div>
+                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs">
+                        <p class="font-bold text-black">Sarah Jenkins</p>
+                        <p class="text-gray-500 text-[11px]">Code 8 Automatic (VW Polo)</p>
+                        <p class="text-green-600 font-semibold mt-1">96% Pass Rate</p>
+                    </div>
+                    <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs">
+                        <p class="font-bold text-black">John Doe</p>
+                        <p class="text-gray-500 text-[11px]">Code 10 Heavy Motor (Hino)</p>
+                        <p class="text-green-600 font-semibold mt-1">94% Pass Rate</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 text-center space-y-1 text-xs text-gray-500">
+                <p class="font-bold text-gray-800">Gold Driving School (Pty) Ltd</p>
+                <p>Reg No: 2024/892011/07 | VAT: 4900293811</p>
+                <p>Support: +27 (0)11 555 0192 • 124 Main Road, City Centre</p>
+            </div>
+        </section>
+
+        <!-- SCREEN 4: BOOKINGS -->
+        <section id="screen-bookings" class="screen hidden space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-black">My Bookings</h2>
+                <button onclick="navigateTo('screen-book-lesson')" class="px-4 py-2 bg-brandGold text-black font-semibold rounded-xl text-xs">+ New Booking</button>
+            </div>
+            <div id="bookings-container" class="space-y-3">
+                <!-- Dynamically rendered bookings -->
+            </div>
+        </section>
+
+        <!-- SCREEN 5: PROGRESS & K53 MINI QUIZ -->
+        <section id="screen-progress" class="screen hidden space-y-6">
+            <h2 class="text-2xl font-bold text-black">K53 Progress & Knowledge Quiz</h2>
+
+            <div class="bg-softCard p-6 rounded-2xl text-center space-y-2">
+                <p id="overall-progress-text" class="text-4xl font-extrabold text-brandGold">40%</p>
+                <p class="text-xs font-semibold text-black">Overall K53 Competency</p>
+                <div class="w-full bg-purple-100 h-1.5 rounded-full overflow-hidden mt-2">
+                    <div id="overall-progress-bar" class="bg-brandGold h-full w-[40%] transition-all"></div>
+                </div>
+            </div>
+
+            <!-- Interactive K53 Mini Quiz Component -->
+            <div class="bg-purple-50 p-5 rounded-2xl border border-purple-200 space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-brandPurple">K53 Road Signs & Rules Quick Test</h3>
+                    <span id="quiz-status" class="text-[11px] bg-white px-2.5 py-1 rounded font-semibold text-gray-700">Question 1 of 3</span>
+                </div>
+
+                <div id="quiz-question-box" class="space-y-3">
+                    <p id="quiz-question-text" class="text-sm font-semibold text-gray-900">1. What must you do when approaching a flashing red robot (traffic light)?</p>
+                    <div id="quiz-options" class="space-y-2">
+                        <button onclick="answerQuiz(0)" class="w-full text-left p-3 bg-white rounded-xl text-xs font-medium hover:bg-brandGold hover:text-black transition border border-purple-100">A) Stop completely and proceed when safe (treated as a four-way stop)</button>
+                        <button onclick="answerQuiz(1)" class="w-full text-left p-3 bg-white rounded-xl text-xs font-medium hover:bg-brandGold hover:text-black transition border border-purple-100">B) Slow down and drive through without stopping</button>
+                        <button onclick="answerQuiz(2)" class="w-full text-left p-3 bg-white rounded-xl text-xs font-medium hover:bg-brandGold hover:text-black transition border border-purple-100">C) Yield to oncoming traffic only</button>
+                    </div>
+                </div>
+                <div id="quiz-result-feedback" class="hidden text-xs font-bold text-green-700 bg-green-100 p-3 rounded-xl"></div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-base font-bold text-black">Driving Skill Breakdown</h3>
+                <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-semibold"><span>Vehicle Control</span><span>80%</span></div>
+                    <div class="w-full bg-purple-100 h-1 rounded-full"><div class="bg-brandGold h-full w-[80%]"></div></div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-semibold"><span>Parking & Yard Test</span><span>60%</span></div>
+                    <div class="w-full bg-purple-100 h-1 rounded-full"><div class="bg-brandGold h-full w-[60%]"></div></div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-semibold"><span>Road Awareness & Observations</span><span>50%</span></div>
+                    <div class="w-full bg-purple-100 h-1 rounded-full"><div class="bg-brandGold h-full w-[50%]"></div></div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-semibold"><span>Traffic Rules & Signals</span><span id="traffic-rule-score">70%</span></div>
+                    <div class="w-full bg-purple-100 h-1 rounded-full"><div id="traffic-rule-bar" class="bg-brandGold h-full w-[70%]"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 6: PROFILE, PAYMENTS & INVOICES -->
+        <section id="screen-profile" class="screen hidden space-y-6">
+            <h2 class="text-2xl font-bold text-black">Payments & Student Profile</h2>
             <div>
-              <p class="text-xs text-gray-500">Outstanding Balance</p>
-              <p id="dash-balance-display" class="text-xl font-extrabold text-black mt-0.5">R850</p>
+                <h3 id="profile-name" class="text-lg font-bold text-black">Phomolo</h3>
+                <p class="text-xs text-gray-500">Student ID: #GDS-8802 • K53 Enrolled</p>
             </div>
-            <button onclick="navigateTo('screen-profile')" class="text-[11px] font-bold text-brandPurple hover:underline mt-2 text-left">View Invoice & Pay →</button>
-          </div>
-        </div>
 
-        <!-- Instructor Fleet Highlights -->
-        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
-          <h3 class="text-sm font-bold text-black">Featured Instructors & Vehicles</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs">
-              <p class="font-bold text-black">Leon Schuster</p>
-              <p class="text-gray-500 text-[11px]">Code 8 Manual (Toyota Yaris)</p>
-              <p class="text-green-600 font-semibold mt-1">98% Pass Rate</p>
+            <!-- Interactive Payment Box -->
+            <div class="bg-slate-900 text-white p-5 rounded-2xl space-y-4 shadow-lg">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-xs text-slate-400">Account Balance Status</p>
+                        <p id="profile-balance-text" class="text-2xl font-extrabold text-brandGold mt-0.5">R850 Outstanding</p>
+                    </div>
+                    <span id="payment-status-badge" class="text-[10px] bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded font-mono font-bold border border-amber-500/30">UNPAID</span>
+                </div>
+                <p class="text-xs text-slate-300">Simulate settlement via Instant EFT or credit card to clear your account balance for test booking approval.</p>
+                <button id="pay-button" onclick="simulatePayment()" class="w-full py-3 bg-brandGold text-black font-bold rounded-xl text-xs hover:bg-amber-400 transition">Pay R850 Balance Now</button>
             </div>
-            <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs">
-              <p class="font-bold text-black">Sarah Jenkins</p>
-              <p class="text-gray-500 text-[11px]">Code 8 Automatic (VW Polo)</p>
-              <p class="text-green-600 font-semibold mt-1">96% Pass Rate</p>
+
+            <!-- Official Tax Invoice Card -->
+            <div id="invoice-card" class="bg-softCard p-5 rounded-2xl text-xs space-y-2 border border-slate-200">
+                <div class="flex justify-between border-b border-gray-300 pb-2">
+                    <p class="font-bold text-black">Official Tax Invoice / Statement</p>
+                    <p class="text-gray-500 font-mono">INV-2026-089</p>
+                </div>
+                <p><span class="font-medium">Company:</span> Gold Driving School (Pty) Ltd</p>
+                <p><span class="font-medium">Reg No:</span> 2024/892011/07 | <span class="font-medium">VAT:</span> 4900293811</p>
+                <p><span class="font-medium">Description:</span> K53 Standard Lesson Package (8 Hours)</p>
+                <p class="pt-1"><span class="font-medium">Status:</span> <strong id="invoice-status-text" class="text-amber-700">Pending Settlement</strong></p>
+                <button onclick="window.print()" class="mt-2 px-3 py-1.5 bg-white border border-gray-400 rounded-lg font-semibold hover:bg-gray-100">Print / Save Invoice</button>
             </div>
-            <div class="bg-white p-3 rounded-xl border border-slate-200 text-xs">
-              <p class="font-bold text-black">John Doe</p>
-              <p class="text-gray-500 text-[11px]">Code 10 Heavy Motor (Hino)</p>
-              <p class="text-green-600 font-semibold mt-1">94% Pass Rate</p>
+
+            <button onclick="confirmLogout()" class="w-full py-3 bg-gray-200 text-black font-semibold rounded-full text-xs hover:bg-gray-300">Logout</button>
+        </section>
+
+        <!-- SCREEN 7: BOOK A LESSON -->
+        <section id="screen-book-lesson" class="screen hidden max-w-sm mx-auto space-y-4">
+            <div class="flex items-center space-x-3 mb-6">
+                <button onclick="navigateTo('screen-dashboard')" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold">←</button>
+                <h2 class="text-xl font-bold text-black">Book a Lesson</h2>
             </div>
-          </div>
-        </div>
+            <form onsubmit="handleNewBooking(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Select Instructor & Vehicle</label>
+                    <select id="book-instructor" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
+                        <option value="">Choose Instructor...</option>
+                        <option value="Leon Schuster">Leon Schuster (Code 8 Manual • 98% Pass)</option>
+                        <option value="Sarah Jenkins">Sarah Jenkins (Code 8 Auto • 96% Pass)</option>
+                        <option value="John Doe">John Doe (Code 10 Truck • 94% Pass)</option>
+                        <option value="Michael Vance">Michael Vance (Code 8 Manual • 95% Pass)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Lesson Focus Type</label>
+                    <select id="book-type" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
+                        <option value="Driving Lesson">Standard Driving Lesson</option>
+                        <option value="Test Preparation">K53 Road Test Preparation</option>
+                        <option value="Yard & Parallel Parking">Yard & Parallel Parking Focus</option>
+                        <option value="Highway Driving">Highway & Traffic Navigation</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Date</label>
+                    <input type="date" id="book-date" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Time Slot</label>
+                    <input type="time" id="book-time" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-brandGold text-black font-semibold rounded-full mt-4 shadow-sm hover:opacity-95">Confirm and Check Conflict</button>
+            </form>
+        </section>
 
-        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 text-center space-y-1 text-xs text-gray-500">
-          <p class="font-bold text-gray-800">Gold Driving School (Pty) Ltd</p>
-          <p>Reg No: 2024/892011/07 | VAT: 4900293811</p>
-          <p>Support: +27 (0)11 555 0192 • 124 Main Road, City Centre</p>
-        </div>
-      </section>
-
-      <!-- SCREEN 4: BOOKINGS -->
-      <section id="screen-bookings" class="screen hidden space-y-4">
-        <div class="flex justify-between items-center">
-          <h2 class="text-2xl font-bold text-black">My Bookings</h2>
-          <button onclick="navigateTo('screen-book-lesson')" class="px-4 py-2 bg-brandGold text-black font-semibold rounded-xl text-xs">+ New Booking</button>
-        </div>
-        <div id="bookings-container" class="space-y-3">
-          <!-- Dynamically rendered bookings -->
-        </div>
-      </section>
-
-      <!-- SCREEN 5: PROGRESS & K53 MINI QUIZ -->
-      <section id="screen-progress" class="screen hidden space-y-6">
-        <h2 class="text-2xl font-bold text-black">K53 Progress & Knowledge Quiz</h2>
-        
-        <div class="bg-softCard p-6 rounded-2xl text-center space-y-2">
-          <p id="overall-progress-text" class="text-4xl font-extrabold text-brandGold">40%</p>
-          <p class="text-xs font-semibold text-black">Overall K53 Competency</p>
-          <div class="w-full bg-purple-100 h-1.5 rounded-full overflow-hidden mt-2">
-            <div id="overall-progress-bar" class="bg-brandGold h-full w-[40%] transition-all"></div>
-          </div>
-        </div>
-
-        <!-- Interactive K53 Mini Quiz Component -->
-        <div class="bg-purple-50 p-5 rounded-2xl border border-purple-200 space-y-4">
-          <div class="flex justify-between items-center">
-            <h3 class="text-sm font-bold text-brandPurple">K53 Road Signs & Rules Quick Test</h3>
-            <span id="quiz-status" class="text-[11px] bg-white px-2.5 py-1 rounded font-semibold text-gray-700">Question 1 of 3</span>
-          </div>
-          
-          <div id="quiz-question-box" class="space-y-3">
-            <p id="quiz-question-text" class="text-sm font-semibold text-gray-900">1. What must you do when approaching a flashing red robot (traffic light)?</p>
-            <div id="quiz-options" class="space-y-2">
-              <button onclick="answerQuiz(0)" class="w-full text-left p-3 bg-white rounded-xl text-xs font-medium hover:bg-brandGold hover:text-black transition border border-purple-100">A) Stop completely and proceed when safe (treated as a four-way stop)</button>
-              <button onclick="answerQuiz(1)" class="w-full text-left p-3 bg-white rounded-xl text-xs font-medium hover:bg-brandGold hover:text-black transition border border-purple-100">B) Slow down and drive through without stopping</button>
-              <button onclick="answerQuiz(2)" class="w-full text-left p-3 bg-white rounded-xl text-xs font-medium hover:bg-brandGold hover:text-black transition border border-purple-100">C) Yield to oncoming traffic only</button>
+        <!-- SCREEN 8: INSTRUCTOR / ADMIN DASHBOARD -->
+        <section id="screen-admin" class="screen hidden space-y-4">
+            <div class="flex justify-between items-center mb-2">
+                <div>
+                    <h2 class="text-xl font-bold text-black">Instructor Portal</h2>
+                    <p class="text-xs text-gray-500">Manage student bookings and contact numbers.</p>
+                </div>
+                <span class="text-[10px] bg-purple-100 text-brandPurple font-mono px-2.5 py-1 rounded font-bold">ADMIN / INSTRUCTOR</span>
             </div>
-          </div>
-          <div id="quiz-result-feedback" class="hidden text-xs font-bold text-green-700 bg-green-100 p-3 rounded-xl"></div>
-        </div>
-
-        <div class="space-y-4">
-          <h3 class="text-base font-bold text-black">Driving Skill Breakdown</h3>
-          <div class="space-y-1">
-            <div class="flex justify-between text-xs font-semibold"><span>Vehicle Control</span><span>80%</span></div>
-            <div class="w-full bg-purple-100 h-1 rounded-full"><div class="bg-brandGold h-full w-[80%]"></div></div>
-          </div>
-          <div class="space-y-1">
-            <div class="flex justify-between text-xs font-semibold"><span>Parking & Yard Test</span><span>60%</span></div>
-            <div class="w-full bg-purple-100 h-1 rounded-full"><div class="bg-brandGold h-full w-[60%]"></div></div>
-          </div>
-          <div class="space-y-1">
-            <div class="flex justify-between text-xs font-semibold"><span>Road Awareness & Observations</span><span>50%</span></div>
-            <div class="w-full bg-purple-100 h-1 rounded-full"><div class="bg-brandGold h-full w-[50%]"></div></div>
-          </div>
-          <div class="space-y-1">
-            <div class="flex justify-between text-xs font-semibold"><span>Traffic Rules & Signals</span><span id="traffic-rule-score">70%</span></div>
-            <div class="w-full bg-purple-100 h-1 rounded-full"><div id="traffic-rule-bar" class="bg-brandGold h-full w-[70%]"></div></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCREEN 6: PROFILE, PAYMENTS & INVOICES -->
-      <section id="screen-profile" class="screen hidden space-y-6">
-        <h2 class="text-2xl font-bold text-black">Payments & Student Profile</h2>
-        <div>
-          <h3 id="profile-name" class="text-lg font-bold text-black">Phomolo</h3>
-          <p class="text-xs text-gray-500">Student ID: #GDS-8802 • K53 Enrolled</p>
-        </div>
-
-        <!-- Interactive Payment Box -->
-        <div class="bg-slate-900 text-white p-5 rounded-2xl space-y-4 shadow-lg">
-          <div class="flex justify-between items-center">
-            <div>
-              <p class="text-xs text-slate-400">Account Balance Status</p>
-              <p id="profile-balance-text" class="text-2xl font-extrabold text-brandGold mt-0.5">R850 Outstanding</p>
+            <div id="admin-bookings-container" class="space-y-3">
+                <!-- Dynamically rendered instructor view -->
             </div>
-            <span id="payment-status-badge" class="text-[10px] bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded font-mono font-bold border border-amber-500/30">UNPAID</span>
-          </div>
-          <p class="text-xs text-slate-300">Simulate settlement via Instant EFT or credit card to clear your account balance for test booking approval.</p>
-          <button id="pay-button" onclick="simulatePayment()" class="w-full py-3 bg-brandGold text-black font-bold rounded-xl text-xs hover:bg-amber-400 transition">Pay R850 Balance Now</button>
-        </div>
+        </section>
 
-        <!-- Official Tax Invoice Card -->
-        <div id="invoice-card" class="bg-softCard p-5 rounded-2xl text-xs space-y-2 border border-slate-200">
-          <div class="flex justify-between border-b border-gray-300 pb-2">
-            <p class="font-bold text-black">Official Tax Invoice / Statement</p>
-            <p class="text-gray-500 font-mono">INV-2026-089</p>
-          </div>
-          <p><span class="font-medium">Company:</span> Gold Driving School (Pty) Ltd</p>
-          <p><span class="font-medium">Reg No:</span> 2024/892011/07 | <span class="font-medium">VAT:</span> 4900293811</p>
-          <p><span class="font-medium">Description:</span> K53 Standard Lesson Package (8 Hours)</p>
-          <p class="pt-1"><span class="font-medium">Status:</span> <strong id="invoice-status-text" class="text-amber-700">Pending Settlement</strong></p>
-          <button onclick="window.print()" class="mt-2 px-3 py-1.5 bg-white border border-gray-400 rounded-lg font-semibold hover:bg-gray-100">Print / Save Invoice</button>
-        </div>
+        <!-- SCREEN 9: ADMIN / INSTRUCTOR LOGIN -->
+        <section id="screen-admin-login" class="screen hidden flex flex-col justify-center min-h-[750px] max-w-sm mx-auto">
+            <div class="flex items-center space-x-3 mb-6">
+                <button onclick="navigateTo('screen-login')" class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold">←</button>
+                <div>
+                    <h1 class="text-xl font-extrabold text-black">Instructor Portal</h1>
+                    <p class="text-[10px] text-gray-500 font-mono">Restricted Staff Access</p>
+                </div>
+            </div>
 
-        <button onclick="confirmLogout()" class="w-full py-3 bg-gray-200 text-black font-semibold rounded-full text-xs hover:bg-gray-300">Logout</button>
-      </section>
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-black">Staff Login</h2>
+                <p class="text-sm text-gray-600 mt-1">Enter your instructor credentials to manage bookings.</p>
+            </div>
 
-      <!-- SCREEN 7: BOOK A LESSON -->
-      <section id="screen-book-lesson" class="screen hidden max-w-sm mx-auto space-y-4">
-        <div class="flex items-center space-x-3 mb-6">
-          <button onclick="navigateTo('screen-dashboard')" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold">←</button>
-          <h2 class="text-xl font-bold text-black">Book a Lesson</h2>
-        </div>
-        <form onsubmit="handleNewBooking(event)" class="space-y-4">
-          <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1">Select Instructor & Vehicle</label>
-            <select id="book-instructor" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-              <option value="">Choose Instructor...</option>
-              <option value="Leon Schuster">Leon Schuster (Code 8 Manual • 98% Pass)</option>
-              <option value="Sarah Jenkins">Sarah Jenkins (Code 8 Auto • 96% Pass)</option>
-              <option value="John Doe">John Doe (Code 10 Truck • 94% Pass)</option>
-              <option value="Michael Vance">Michael Vance (Code 8 Manual • 95% Pass)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1">Lesson Focus Type</label>
-            <select id="book-type" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-              <option value="Driving Lesson">Standard Driving Lesson</option>
-              <option value="Test Preparation">K53 Road Test Preparation</option>
-              <option value="Yard & Parallel Parking">Yard & Parallel Parking Focus</option>
-              <option value="Highway Driving">Highway & Traffic Navigation</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1">Date</label>
-            <input type="date" id="book-date" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1">Time Slot</label>
-            <input type="time" id="book-time" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none">
-          </div>
-          <button type="submit" class="w-full py-3.5 bg-brandGold text-black font-semibold rounded-full mt-4 shadow-sm hover:opacity-95">Confirm and Check Conflict</button>
-        </form>
-      </section>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <input type="email" id="admin-email" placeholder="Instructor Email (e.g. leon@golddrivingschool.co.za)" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none focus:border-brandPurple">
+                <input type="password" id="admin-password" placeholder="Admin Password" required class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-gray-50 text-sm focus:outline-none focus:border-brandPurple">
+                <button type="submit" class="w-full py-3.5 bg-slate-900 text-white font-semibold rounded-full shadow-sm hover:opacity-90 transition">Instructor Login</button>
+            </form>
 
-      <!-- SCREEN 8: INSTRUCTOR / ADMIN DASHBOARD -->
-      <section id="screen-admin" class="screen hidden space-y-4">
-        <div class="flex justify-between items-center mb-2">
-          <div>
-            <h2 class="text-xl font-bold text-black">Instructor Portal</h2>
-            <p class="text-xs text-gray-500">Manage student bookings and contact numbers.</p>
-          </div>
-          <span class="text-[10px] bg-purple-100 text-brandPurple font-mono px-2.5 py-1 rounded font-bold">ADMIN / INSTRUCTOR</span>
-        </div>
-        <div id="admin-bookings-container" class="space-y-3">
-          <!-- Dynamically rendered instructor view -->
-        </div>
-      </section>
+            <div class="mt-8 text-center border-t border-gray-100 pt-4">
+                <p class="text-[11px] text-gray-500">Are you a student? <button onclick="navigateTo('screen-login')" class="text-brandGold font-bold hover:underline">Student Login</button></p>
+            </div>
+        </section>
 
     </div>
 
     <!-- MOBILE BOTTOM NAVIGATION BAR (Visible only on phones < sm) -->
     <nav id="bottom-nav" class="sm:hidden absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2.5 flex justify-between items-center text-[10px] font-medium text-gray-500 z-40">
-      <button onclick="navigateTo('screen-dashboard')" class="flex flex-col items-center">🏠 Home</button>
-      <button onclick="navigateTo('screen-book-lesson')" class="flex flex-col items-center">📅 Book</button>
-      <button onclick="navigateTo('screen-bookings')" class="flex flex-col items-center">📋 Bookings</button>
-      <button onclick="navigateTo('screen-progress')" class="flex flex-col items-center">📊 Quiz</button>
-      <button onclick="navigateTo('screen-admin')" class="flex flex-col items-center text-brandPurple font-bold">🛡️ Admin</button>
-      <button onclick="navigateTo('screen-profile')" class="flex flex-col items-center">💳 Profile</button>
+        <button onclick="navigateTo('screen-dashboard')" class="student-only flex flex-col items-center">🏠 Home</button>
+        <button onclick="navigateTo('screen-book-lesson')" class="student-only flex flex-col items-center">📅 Book</button>
+        <button onclick="navigateTo('screen-bookings')" class="student-only flex flex-col items-center">📋 Bookings</button>
+        <button onclick="navigateTo('screen-progress')" class="student-only flex flex-col items-center">📊 Quiz</button>
+        <button onclick="navigateTo('screen-profile')" class="student-only flex flex-col items-center">💳 Profile</button>
+
+        <button onclick="navigateTo('screen-admin')" class="instructor-only hidden flex flex-col items-center text-brandPurple font-bold">🛡️ Admin</button>
+
     </nav>
 
   </main>

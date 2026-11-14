@@ -1,5 +1,12 @@
+const INSTRUCTOR_DIRECTORY = {
+    "leon@golddrivingschool.co.za": "Leon Schuster",
+    "sarah@golddrivingschool.co.za": "Sarah Jenkins",
+    "john@golddrivingschool.co.za": "John Doe",
+    "michael@golddrivingschool.co.za": "Michael Vance"
+};
+
 // INITIAL STATE & LOCAL STORAGE SYNC
-let currentUser = { firstname: "Phomolo", lastname: "", phone: "+27 82 555 1234", email: "phomolo@gmail.com", balancePaid: false };
+let currentUser = { firstname: "Phomolo", lastname: "",fullName: "", phone: "+27 82 555 1234", email: "phomolo@gmail.com", balancePaid: false };
 
 let defaultBookings = [
   { id: 1, type: "Driving Lesson", date: "2026-06-15", time: "14:00", instructor: "Leon Schuster", status: "Confirmed", studentName: "Phomolo", studentPhone: "+27 82 555 1234" },
@@ -39,13 +46,19 @@ function navigateTo(screenId) {
   const bottomNav = document.getElementById('bottom-nav');
   const sidebar = document.getElementById('desktop-sidebar');
   
-  if (screenId === 'screen-login' || screenId === 'screen-register') {
+    if (screenId === 'screen-login' || screenId === 'screen-register' || screenId === 'screen-admin-login') {
     if (bottomNav) bottomNav.classList.add('hidden');
-    if (sidebar) sidebar.classList.add('hidden');
-  } else {
-    if (bottomNav) bottomNav.classList.remove('hidden');
-    if (sidebar) sidebar.classList.remove('hidden');
-  }
+        if (sidebar) {
+            sidebar.classList.add('hidden');
+            sidebar.classList.remove('sm:flex');
+        }
+        } else {
+            if (bottomNav) bottomNav.classList.remove('hidden');
+            if (sidebar) {
+                sidebar.classList.remove('hidden');
+                sidebar.classList.add('sm:flex');
+            }
+        }
 
   if (screenId === 'screen-bookings') renderBookings();
   if (screenId === 'screen-admin') renderAdminBookings();
@@ -54,10 +67,25 @@ function navigateTo(screenId) {
 // LOGOUT CONFIRMATION PROMPT
 function confirmLogout() {
   const confirmed = confirm("Are you sure you want to log out of your Gold Driving School account?");
-  if (confirmed) {
+    if (confirmed) {
+        currentUser.role = "student";
+        applyRoleUI("student")
     showToast("You have been logged out safely.", false);
     navigateTo('screen-login');
   }
+}
+function applyRoleUI(role) {
+    const isInstructor = (role === 'instructor');
+
+   
+    document.querySelectorAll('.instructor-only').forEach(el => {
+        el.classList.toggle('hidden', !isInstructor);
+    });
+
+  
+    document.querySelectorAll('.student-only').forEach(el => {
+        el.classList.toggle('hidden', isInstructor);
+    });
 }
 
 // LOGIN & REGISTRATION
@@ -66,7 +94,9 @@ function handleLogin(event) {
   const email = document.getElementById('login-email').value;
   const rawName = email.split('@')[0];
   currentUser.firstname = rawName.charAt(0).toUpperCase() + rawName.slice(1);
-  currentUser.email = email;
+    currentUser.email = email;
+    currentUser.role = "student";
+    applyRoleUI("student");
 
   const welcomeEl = document.getElementById('dashboard-welcome');
   const profileNameEl = document.getElementById('profile-name');
@@ -76,6 +106,27 @@ function handleLogin(event) {
   
   showToast(`Welcome back, ${currentUser.firstname}!`);
   navigateTo('screen-dashboard');
+}
+function handleAdminLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('admin-email').value.trim().toLowerCase();
+    const password = document.getElementById('admin-password').value;
+
+    const matchedInstructor = INSTRUCTOR_DIRECTORY[email];
+
+    if (matchedInstructor && password.length >= 6) {
+        currentUser.fullName = matchedInstructor;
+        currentUser.firstname = matchedInstructor.split(' ')[0];
+        currentUser.email = email;
+        currentUser.role = "instructor";
+        applyRoleUI("instructor");
+
+        
+        showToast(`Welcome back, ${matchedInstructor}!`);
+        navigateTo('screen-admin');
+    } else {
+        showToast("Invalid instructor email or password.", false);
+    }
 }
 
 function handleRegister(event) {
@@ -171,12 +222,19 @@ function renderAdminBookings() {
   
   let bookings = JSON.parse(localStorage.getItem("gds_bookings")) || [];
 
-  if (bookings.length === 0) {
+    const myBookings = bookings.filter(b => b.instructor === currentUser.fullName);
+
+    const adminSubtitle = document.querySelector('#screen-admin p.text-xs');
+    if (adminSubtitle && currentUser.fullName) {
+        adminSubtitle.innerText = `Showing scheduled lessons for ${currentUser.fullName}`;
+    }
+
+  if (myBookings.length === 0) {
     container.innerHTML = `<p class="text-xs text-gray-500 text-center py-8">No instructor bookings registered.</p>`;
     return;
   }
 
-  container.innerHTML = bookings.map(b => `
+  container.innerHTML = myBookings.map(b => `
     <div class="bg-lightPurpleBg p-4 rounded-2xl border border-purple-100 space-y-2">
       <div class="flex justify-between items-center">
         <span class="text-[10px] font-bold px-2 py-0.5 rounded ${b.status === 'Confirmed' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'}">${b.status}</span>
