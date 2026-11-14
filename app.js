@@ -1,4 +1,4 @@
-// INITIAL STATE & LOCAL STORAGE SYNC 
+// INITIAL STATE & LOCAL STORAGE SYNC
 let currentUser = { firstname: "Peter", lastname: "Park", phone: "+27 82 555 1234", email: "peter@example.com" };
 
 let defaultBookings = [
@@ -34,20 +34,38 @@ function navigateTo(screenId) {
 function handleLogin(event) {
   event.preventDefault();
   const email = document.getElementById('login-email').value;
-  currentUser.email = email;
   
-  // If user typed a custom email/name or pre-registered, keep it clean
+  // If user didn't just register with a custom name, derive a clean name from their login email
+  if (currentUser.email !== email && currentUser.firstname === "Peter") {
+    const rawName = email.split('@')[0].replace(/[^a-zA-Z]/g, ' ');
+    currentUser.firstname = rawName.charAt(0).toUpperCase() + rawName.slice(1);
+    currentUser.lastname = "";
+  }
+  currentUser.email = email;
+
+  const fullName = `${currentUser.firstname} ${currentUser.lastname}`.trim();
   document.getElementById('dashboard-welcome').innerText = `Welcome, ${currentUser.firstname}!`;
-  document.getElementById('profile-name').innerText = `${currentUser.firstname} ${currentUser.lastname}`;
+  document.getElementById('profile-name').innerText = fullName;
+
+  // Upgrade any old cached bookings that had no studentName attached
+  let bookings = JSON.parse(localStorage.getItem("gds_bookings")) || [];
+  bookings = bookings.map(b => {
+    if (!b.studentName || b.studentName === "Student") {
+      b.studentName = fullName;
+    }
+    return b;
+  });
+  localStorage.setItem("gds_bookings", JSON.stringify(bookings));
+
   navigateTo('screen-dashboard');
 }
 
 function handleRegister(event) {
   event.preventDefault();
-  currentUser.firstname = document.getElementById('reg-firstname').value;
-  currentUser.lastname = document.getElementById('reg-lastname').value;
-  currentUser.email = document.getElementById('reg-email').value;
-  currentUser.phone = document.getElementById('reg-phone').value;
+  currentUser.firstname = document.getElementById('reg-firstname').value.trim();
+  currentUser.lastname = document.getElementById('reg-lastname').value.trim();
+  currentUser.email = document.getElementById('reg-email').value.trim();
+  currentUser.phone = document.getElementById('reg-phone').value.trim();
   
   alert("Account created successfully! Please log in.");
   navigateTo('screen-login');
@@ -71,6 +89,8 @@ function handleNewBooking(event) {
     return;
   }
 
+  const fullName = `${currentUser.firstname} ${currentUser.lastname}`.trim();
+
   const newBooking = {
     id: Date.now(),
     type,
@@ -78,7 +98,7 @@ function handleNewBooking(event) {
     time,
     instructor,
     status: "Pending",
-    studentName: `${currentUser.firstname} ${currentUser.lastname}`,
+    studentName: fullName,
     studentPhone: currentUser.phone
   };
 
@@ -93,6 +113,7 @@ function handleNewBooking(event) {
 function renderBookings() {
   const container = document.getElementById('bookings-container');
   let bookings = JSON.parse(localStorage.getItem("gds_bookings")) || [];
+  const fullName = `${currentUser.firstname} ${currentUser.lastname}`.trim();
 
   if (bookings.length === 0) {
     container.innerHTML = `<p class="text-xs text-gray-500 text-center py-8">No bookings found.</p>`;
@@ -106,7 +127,7 @@ function renderBookings() {
         <p class="text-sm font-bold text-black mt-1">${b.type}</p>
         <p class="text-xs text-gray-600">📅 ${b.date} at ${b.time}</p>
         <p class="text-xs text-gray-500">Instructor: ${b.instructor}</p>
-        <p class="text-[11px] font-semibold text-brandPurple pt-0.5">Booked for: ${b.studentName || 'Student'}</p>
+        <p class="text-[11px] font-semibold text-brandPurple pt-0.5">Booked for: ${b.studentName || fullName}</p>
       </div>
       <button onclick="confirmCancelBooking(${b.id})" class="text-xs text-red-600 font-semibold hover:underline bg-white px-3 py-1.5 rounded-lg shadow-sm border border-red-100">Cancel</button>
     </div>
@@ -129,6 +150,7 @@ function confirmCancelBooking(id) {
 function renderAdminBookings() {
   const container = document.getElementById('admin-bookings-container');
   let bookings = JSON.parse(localStorage.getItem("gds_bookings")) || [];
+  const fullName = `${currentUser.firstname} ${currentUser.lastname}`.trim();
 
   if (bookings.length === 0) {
     container.innerHTML = `<p class="text-xs text-gray-500 text-center py-8">No instructor bookings registered.</p>`;
@@ -142,7 +164,7 @@ function renderAdminBookings() {
         <span class="text-xs font-mono text-gray-500">📅 ${b.date} (${b.time})</span>
       </div>
       <div>
-        <p class="text-sm font-bold text-black">👤 Student: ${b.studentName || 'Student'}</p>
+        <p class="text-sm font-bold text-black">👤 Student: ${b.studentName || fullName}</p>
         <p class="text-xs font-semibold text-brandPurple">📞 Phone: ${b.studentPhone || '+27 82 555 0192'}</p>
       </div>
       <div class="text-xs text-gray-600 pt-1 border-t border-purple-50 flex justify-between items-center">
