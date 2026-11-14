@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gold Driving School - Student Portal</title>
+  <title>Gold Driving School - Student & Admin Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -124,9 +124,9 @@
 
     <!-- SCREEN 4: BOOKINGS -->
     <section id="screen-bookings" class="screen hidden p-6 space-y-4">
-      <h2 class="text-2xl font-bold text-black mb-4">My Bookings</h2>
+      <h2 class="text-2xl font-bold text-black mb-2">My Bookings</h2>
       <div id="bookings-container" class="space-y-3">
-        <!-- Dynamically rendered bookings -->
+        <!-- Dynamically rendered bookings with cancel confirmations -->
       </div>
     </section>
 
@@ -222,11 +222,24 @@
       </form>
     </section>
 
+    <!-- SCREEN 8: INSTRUCTOR / ADMIN DASHBOARD (New Administrative Requirement) -->
+    <section id="screen-admin" class="screen hidden p-6 space-y-4">
+      <div class="flex justify-between items-center mb-2">
+        <h2 class="text-xl font-bold text-black">Instructor Portal</h2>
+        <span class="text-[10px] bg-purple-100 text-brandPurple font-mono px-2 py-0.5 rounded font-bold">ADMIN VIEW</span>
+      </div>
+      <p class="text-xs text-gray-500 mb-2">View pending student bookings, student names, and phone numbers.</p>
+      <div id="admin-bookings-container" class="space-y-3">
+        <!-- Dynamically rendered instructor view with student phone numbers -->
+      </div>
+    </section>
+
     <!-- BOTTOM NAVIGATION BAR -->
-    <nav id="bottom-nav" class="hidden absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-2 flex justify-between items-center text-xs font-medium text-gray-500">
+    <nav id="bottom-nav" class="hidden absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 flex justify-between items-center text-[11px] font-medium text-gray-500">
       <button onclick="navigateTo('screen-dashboard')" class="flex flex-col items-center">🏠 Home</button>
       <button onclick="navigateTo('screen-bookings')" class="flex flex-col items-center">📅 Bookings</button>
       <button onclick="navigateTo('screen-progress')" class="flex flex-col items-center">📊 Progress</button>
+      <button onclick="navigateTo('screen-admin')" class="flex flex-col items-center text-brandPurple font-bold">🛡️ Instructor</button>
       <button onclick="navigateTo('screen-profile')" class="flex flex-col items-center">👤 Profile</button>
     </nav>
 
