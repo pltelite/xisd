@@ -1,4 +1,4 @@
-// INITIAL STATE & LOCAL STORAGE SYNC
+// INITIAL STATE & LOCAL STORAGE SYNC 
 let currentUser = { firstname: "Peter", lastname: "Park", phone: "+27 82 555 1234", email: "peter@example.com" };
 
 let defaultBookings = [
