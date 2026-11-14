@@ -35,6 +35,8 @@ function handleLogin(event) {
   event.preventDefault();
   const email = document.getElementById('login-email').value;
   currentUser.email = email;
+  
+  // If user typed a custom email/name or pre-registered, keep it clean
   document.getElementById('dashboard-welcome').innerText = `Welcome, ${currentUser.firstname}!`;
   document.getElementById('profile-name').innerText = `${currentUser.firstname} ${currentUser.lastname}`;
   navigateTo('screen-dashboard');
@@ -51,7 +53,7 @@ function handleRegister(event) {
   navigateTo('screen-login');
 }
 
-// NEW BOOKING WITH SLOT CONFLICT VALIDATION
+// NEW BOOKING WITH SLOT CONFLICT VALIDATION & USER'S CHOSEN NAME
 function handleNewBooking(event) {
   event.preventDefault();
   const instructor = document.getElementById('book-instructor').value;
@@ -87,7 +89,7 @@ function handleNewBooking(event) {
   navigateTo('screen-bookings');
 }
 
-// RENDER STUDENT BOOKINGS WITH CANCELLATION CONFIRMATION PROMPT
+// RENDER STUDENT BOOKINGS (Shows student's chosen name)
 function renderBookings() {
   const container = document.getElementById('bookings-container');
   let bookings = JSON.parse(localStorage.getItem("gds_bookings")) || [];
@@ -104,6 +106,7 @@ function renderBookings() {
         <p class="text-sm font-bold text-black mt-1">${b.type}</p>
         <p class="text-xs text-gray-600">📅 ${b.date} at ${b.time}</p>
         <p class="text-xs text-gray-500">Instructor: ${b.instructor}</p>
+        <p class="text-[11px] font-semibold text-brandPurple pt-0.5">Booked for: ${b.studentName || 'Student'}</p>
       </div>
       <button onclick="confirmCancelBooking(${b.id})" class="text-xs text-red-600 font-semibold hover:underline bg-white px-3 py-1.5 rounded-lg shadow-sm border border-red-100">Cancel</button>
     </div>
@@ -122,7 +125,7 @@ function confirmCancelBooking(id) {
   }
 }
 
-// RENDER INSTRUCTOR / ADMIN DASHBOARD (Student Names & Phone Numbers)
+// RENDER INSTRUCTOR / ADMIN DASHBOARD (Displays the client's chosen name & phone number)
 function renderAdminBookings() {
   const container = document.getElementById('admin-bookings-container');
   let bookings = JSON.parse(localStorage.getItem("gds_bookings")) || [];
