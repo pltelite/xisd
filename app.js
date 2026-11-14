@@ -1,164 +1,165 @@
-// INITIAL BOOKINGS DATA
-const defaultBookings = [
-  { id: 1, type: "Driving Lesson", date: "2026-06-15", time: "14:00", instructor: "Leon Schuster", status: "Confirmed" },
-  { id: 2, type: "Test Preparation", date: "2026-06-20", time: "10:00", instructor: "John Doe", status: "Pending" }
+// INITIAL STATE & LOCAL STORAGE SYNC
+let currentUser = { firstname: "Peter", lastname: "Park", phone: "+27 82 555 1234", email: "peter@example.com" };
+
+let defaultBookings = [
+  { id: 1, type: "Driving Lesson", date: "2026-06-15", time: "14:00", instructor: "Leon Schuster", status: "Confirmed", studentName: "Peter Park", studentPhone: "+27 82 555 1234" },
+  { id: 2, type: "Test Preparation", date: "2026-06-20", time: "10:00", instructor: "John Doe", status: "Pending", studentName: "Peter Park", studentPhone: "+27 82 555 1234" }
 ];
 
 if (!localStorage.getItem("gds_bookings")) {
   localStorage.setItem("gds_bookings", JSON.stringify(defaultBookings));
 }
 
-let currentUser = { firstName: "Peter", lastName: "Park" };
-
+// NAVIGATION FUNCTION
 function navigateTo(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-  const target = document.getElementById(screenId);
-  if (target) target.classList.remove('hidden');
+  document.getElementById(screenId).classList.remove('hidden');
 
   const bottomNav = document.getElementById('bottom-nav');
-  if (['screen-login', 'screen-register'].includes(screenId)) {
+  if (screenId === 'screen-login' || screenId === 'screen-register') {
     bottomNav.classList.add('hidden');
   } else {
     bottomNav.classList.remove('hidden');
-    if (screenId === 'screen-bookings') renderBookings();
   }
-}
-function handleNewBooking(event) {
-    event.preventDefault();
 
-    const instructor = document.getElementById('book-instructor').value;
-    const type = document.getElementById('book-type').value;
-    const date = document.getElementById('book-date').value;
-    const time = document.getElementById('book-time').value;
-
-    if (date && time) {
-        bookingsList.unshift({
-            id: Date.now(),
-            date: date,
-            time: time,
-            type: type,
-            instructor: instructor,
-            status: "Confirmed"
-        });
-    }
-
-    navigateTo('screen-bookings');
-}
-
-function handleUpdateProfile(event) {
-    event.preventDefault();
-    const newName = document.getElementById('settings-name-input').value;
-
-    if (newName) {
-      
-        const profileNameEl = document.getElementById('profile-name');
-        if (profileNameEl) {
-            profileNameEl.innerText = newName;
-        }
-     
-        const dashboardWelcomeEl = document.getElementById('dashboard-welcome');
-        if (dashboardWelcomeEl) {
-            dashboardWelcomeEl.innerText = `Welcome, ${newName}!`;
-        }
-
-        navigateTo('screen-profile');
-    }
-}
-
-function renderBookings() {
-    const container = document.getElementById('bookings-container');
-    if (!container) return;
-
-    if (bookingsList.length === 0) {
-        container.innerHTML = `<p class="text-xs text-gray-500 text-center py-8">No active bookings found.</p>`;
-        return;
-    }
-
-    container.innerHTML = bookingsList.map(b => `
-        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-3">
-            <div class="flex justify-between items-center text-xs font-bold">
-                <span class="text-black text-sm">${b.date}</span>
-                <span class="${b.status === 'Confirmed' ? 'text-emerald-600 bg-emerald-50' : 'text-red-500 bg-red-50'} px-2.5 py-1 rounded-full text-[10px]">${b.status}</span>
-            </div>
-            <p class="text-base font-bold text-black">${b.type}</p>
-            <p class="text-xs text-gray-600">Time: ${b.time}</p>
-            <p class="text-xs text-gray-600">Instructor: ${b.instructor}</p>
-            <button onclick="cancelBooking(${b.id})" class="mt-2 px-4 py-2 border border-gray-300 rounded-lg text-xs font-medium text-black bg-gray-50 hover:bg-gray-100 transition">Cancel Booking</button>
-        </div>
-    `).join('');
-}
-
-function cancelBooking(id) {
-    bookingsList = bookingsList.filter(b => b.id !== id);
+  if (screenId === 'screen-bookings') {
     renderBookings();
-}
-
-function handleLogin(e) {
-  e.preventDefault();
-  navigateTo('screen-dashboard');
-}
-
-function handleRegister(e) {
-  e.preventDefault();
-  const fName = document.getElementById('reg-firstname').value;
-  const lName = document.getElementById('reg-lastname').value;
-  currentUser = { firstName: fName, lastName: lName };
-  
-  document.getElementById('dashboard-welcome').innerText = `Welcome, ${fName}!`;
-  document.getElementById('profile-name').innerText = `${fName} ${lName}`;
-  navigateTo('screen-dashboard');
-}
-
-function renderBookings() {
-  const container = document.getElementById('bookings-container');
-  const bookings = JSON.parse(localStorage.getItem('gds_bookings')) || [];
-  container.innerHTML = '';
-
-  if (bookings.length === 0) {
-    container.innerHTML = `<p class="text-xs text-gray-400 text-center py-6">No active bookings found.</p>`;
-    return;
   }
-
-  bookings.forEach(b => {
-    const card = document.createElement('div');
-    card.className = "bg-softCard p-4 rounded-2xl space-y-2";
-    card.innerHTML = `
-      <div class="flex justify-between items-center text-xs font-bold">
-        <span class="text-black">${b.date}</span>
-        <span class="${b.status === 'Confirmed' ? 'text-emerald-600' : 'text-red-500'}">${b.status}</span>
-      </div>
-      <p class="text-sm font-bold text-black">${b.type}</p>
-      <p class="text-xs text-gray-700">Time: ${b.time}</p>
-      <p class="text-xs text-gray-700">Instructor: ${b.instructor}</p>
-      <button onclick="cancelBooking(${b.id})" class="mt-2 px-4 py-1.5 border border-gray-400 rounded-full text-xs font-medium text-black bg-white/40 hover:bg-white">Cancel Booking</button>
-    `;
-    container.appendChild(card);
-  });
+  if (screenId === 'screen-admin') {
+    renderAdminBookings();
+  }
 }
 
-function handleNewBooking(e) {
-  e.preventDefault();
+// LOGIN & REGISTRATION HANDLERS
+function handleLogin(event) {
+  event.preventDefault();
+  const email = document.getElementById('login-email').value;
+  currentUser.email = email;
+  document.getElementById('dashboard-welcome').innerText = `Welcome, ${currentUser.firstname}!`;
+  document.getElementById('profile-name').innerText = `${currentUser.firstname} ${currentUser.lastname}`;
+  navigateTo('screen-dashboard');
+}
+
+function handleRegister(event) {
+  event.preventDefault();
+  currentUser.firstname = document.getElementById('reg-firstname').value;
+  currentUser.lastname = document.getElementById('reg-lastname').value;
+  currentUser.email = document.getElementById('reg-email').value;
+  currentUser.phone = document.getElementById('reg-phone').value;
+  
+  alert("Account created successfully! Please log in.");
+  navigateTo('screen-login');
+}
+
+// NEW BOOKING WITH SLOT CONFLICT VALIDATION
+function handleNewBooking(event) {
+  event.preventDefault();
   const instructor = document.getElementById('book-instructor').value;
   const type = document.getElementById('book-type').value;
   const date = document.getElementById('book-date').value;
   const time = document.getElementById('book-time').value;
 
-  const bookings = JSON.parse(localStorage.getItem('gds_bookings')) || [];
-  const newBooking = { id: Date.now(), type, date, time, instructor, status: "Pending" };
-  
-  bookings.push(newBooking);
-  localStorage.setItem('gds_bookings', JSON.stringify(bookings));
+  let bookings = JSON.parse(localStorage.getItem("gds_bookings")) || [];
 
+  // CONFLICT VALIDATION: Check if instructor is already booked at this date and time
+  const conflict = bookings.find(b => b.instructor === instructor && b.date === date && b.time === time && b.status !== "Cancelled");
+  
+  if (conflict) {
+    alert(`❌ Slot already taken! Instructor ${instructor} already has a ${conflict.type} booked on ${date} at ${time}. Please choose another time slot.`);
+    return;
+  }
+
+  const newBooking = {
+    id: Date.now(),
+    type,
+    date,
+    time,
+    instructor,
+    status: "Pending",
+    studentName: `${currentUser.firstname} ${currentUser.lastname}`,
+    studentPhone: currentUser.phone
+  };
+
+  bookings.push(newBooking);
+  localStorage.setItem("gds_bookings", JSON.stringify(bookings));
+
+  alert("Booking submitted successfully!");
   navigateTo('screen-bookings');
 }
 
-function cancelBooking(id) {
-  let bookings = JSON.parse(localStorage.getItem('gds_bookings')) || [];
-  bookings = bookings.filter(b => b.id !== id);
-  localStorage.setItem('gds_bookings', JSON.stringify(bookings));
-  renderBookings();
+// RENDER STUDENT BOOKINGS WITH CANCELLATION CONFIRMATION PROMPT
+function renderBookings() {
+  const container = document.getElementById('bookings-container');
+  let bookings = JSON.parse(localStorage.getItem("gds_bookings")) || [];
+
+  if (bookings.length === 0) {
+    container.innerHTML = `<p class="text-xs text-gray-500 text-center py-8">No bookings found.</p>`;
+    return;
+  }
+
+  container.innerHTML = bookings.map(b => `
+    <div class="bg-softCard p-4 rounded-2xl flex justify-between items-start">
+      <div class="space-y-1">
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded ${b.status === 'Confirmed' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'}">${b.status}</span>
+        <p class="text-sm font-bold text-black mt-1">${b.type}</p>
+        <p class="text-xs text-gray-600">📅 ${b.date} at ${b.time}</p>
+        <p class="text-xs text-gray-500">Instructor: ${b.instructor}</p>
+      </div>
+      <button onclick="confirmCancelBooking(${b.id})" class="text-xs text-red-600 font-semibold hover:underline bg-white px-3 py-1.5 rounded-lg shadow-sm border border-red-100">Cancel</button>
+    </div>
+  `).join('');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  navigateTo('screen-login');
-});
+// CANCELLATION CONFIRMATION PROMPT FUNCTION
+function confirmCancelBooking(id) {
+  const confirmed = confirm("Are you sure you want to cancel this booking?");
+  if (confirmed) {
+    let bookings = JSON.parse(localStorage.getItem("gds_bookings")) || [];
+    bookings = bookings.filter(b => b.id !== id);
+    localStorage.setItem("gds_bookings", JSON.stringify(bookings));
+    renderBookings();
+    alert("Booking cancelled successfully.");
+  }
+}
+
+// RENDER INSTRUCTOR / ADMIN DASHBOARD (Student Names & Phone Numbers)
+function renderAdminBookings() {
+  const container = document.getElementById('admin-bookings-container');
+  let bookings = JSON.parse(localStorage.getItem("gds_bookings")) || [];
+
+  if (bookings.length === 0) {
+    container.innerHTML = `<p class="text-xs text-gray-500 text-center py-8">No instructor bookings registered.</p>`;
+    return;
+  }
+
+  container.innerHTML = bookings.map(b => `
+    <div class="bg-lightPurpleBg p-4 rounded-2xl border border-purple-100 space-y-2">
+      <div class="flex justify-between items-center">
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded ${b.status === 'Confirmed' ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'}">${b.status}</span>
+        <span class="text-xs font-mono text-gray-500">📅 ${b.date} (${b.time})</span>
+      </div>
+      <div>
+        <p class="text-sm font-bold text-black">👤 Student: ${b.studentName || 'Student'}</p>
+        <p class="text-xs font-semibold text-brandPurple">📞 Phone: ${b.studentPhone || '+27 82 555 0192'}</p>
+      </div>
+      <div class="text-xs text-gray-600 pt-1 border-t border-purple-50 flex justify-between items-center">
+        <span>Lesson: <strong>${b.type}</strong> (${b.instructor})</span>
+        ${b.status === 'Pending' ? `<button onclick="approveBooking(${b.id})" class="bg-brandPurple text-white px-2.5 py-1 rounded text-[10px] font-bold">Approve</button>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// APPROVE PENDING BOOKING FROM ADMIN VIEW
+function approveBooking(id) {
+  let bookings = JSON.parse(localStorage.getItem("gds_bookings")) || [];
+  bookings = bookings.map(b => {
+    if (b.id === id) {
+      b.status = "Confirmed";
+    }
+    return b;
+  });
+  localStorage.setItem("gds_bookings", JSON.stringify(bookings));
+  renderAdminBookings();
+  alert("Booking confirmed by instructor!");
+}
